@@ -4,15 +4,15 @@ import minus from '../../assets/icon-minus.svg'
 
 const Votes = ({ score }: { score: number }) => {
   return (
-    <div className='flex items-center bg-indigo-100 py-2 w-[30%] rounded-lg'>
+    <div className='flex items-center bg-indigo-100 py-2 w-[30%] rounded-lg sm:flex-col sm:w-10 sm:h-24 sm:py-4 sm:justify-between'>
       <button className='w-1/3 flex items-center justify-center'>
-        <img src={plus} alt='' />
+        <img src={plus} alt='' className='hover:scale-150 transition-all' />
       </button>
       <p className='w-1/3 flex items-center justify-center font-bold'>
         {score}
       </p>
       <button className='w-1/3 flex items-center justify-center'>
-        <img src={minus} alt='' />
+        <img src={minus} alt='' className='hover:scale-150 transition-all' />
       </button>
     </div>
   )

@@ -6,7 +6,6 @@ import Comment from './Comments/Comment'
 const CommentsContainer = () => {
   const { ...state } = useGlobalContext()
   const { comments } = { ...state }
-  console.log(comments)
 
   return (
     <div className='w-full'>

@@ -23,7 +23,7 @@ const Options = ({ username }: user) => {
           </div>
           <div className='flex items-center hover:scale-105 cursor-pointer transition'>
             <img src={editIcon} alt='reply' />{' '}
-            <p className='mx-3 mr-0 text-blue-700'>Edit</p>
+            <p className='mx-3 mr-0 text-blue-900'>Edit</p>
           </div>
         </div>
       )}

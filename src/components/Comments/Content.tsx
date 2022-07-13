@@ -1,7 +1,18 @@
 import React from 'react'
 
-const Content = ({ content }: { content: string }) => {
-  return <p className='my-4'>{content}</p>
+const Content = ({
+  content,
+  replyingTo,
+}: {
+  content: string
+  replyingTo: string
+}) => {
+  return (
+    <p className='my-4 sm:w-[80%] sm:mx-auto sm:my-2'>
+      {replyingTo && <span className='font-bold'>@{replyingTo} </span>}
+      {content}
+    </p>
+  )
 }
 
 export default Content
