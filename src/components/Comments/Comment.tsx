@@ -1,12 +1,19 @@
 import React from 'react'
-import { comment } from '../../types/types'
+import { Comments } from '../../Types/types'
 import Reply from '../Replies/Reply'
 import Content from './Content'
 import Options from './Options'
 import User from './User'
 import Votes from './Votes'
 
-const Comment = ({ id, content, createdAt, replies, score, user }: comment) => {
+const Comment = ({
+  id,
+  content,
+  createdAt,
+  replies,
+  score,
+  user,
+}: Comments) => {
   return (
     <>
       <div className='bg-white p-4 rounded-lg mb-4 text-blue-900 relative'>

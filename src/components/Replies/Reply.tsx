@@ -1,11 +1,18 @@
 import React from 'react'
-import { reply } from '../../types/types'
+import { ReplyType } from '../../Types/types'
 import Content from '../Comments/Content'
 import Options from '../Comments/Options'
 import User from '../Comments/User'
 import Votes from '../Comments/Votes'
 
-const Reply = ({ id, content, createdAt, score, replyingTo, user }: reply) => {
+const Reply = ({
+  id,
+  content,
+  createdAt,
+  score,
+  replyingTo,
+  user,
+}: ReplyType) => {
   return (
     <div className='bg-white rounded-lg p-4 mb-4 text-blue-900 sm:relative'>
       <User {...user} createdAt={createdAt} />

@@ -1,4 +1,4 @@
-export type user = {
+export type User = {
   image: {
     png: string
     webp: string
@@ -6,37 +6,25 @@ export type user = {
   username: string
 }
 
-export type comment = {
-  id: number
-  content: string
-  createdAt: string
-  score: number
-  user: {
-    image: {
-      png: string
-      webp: string
-    }
-    username: string
-  }
-  replies: reply[]
-}
-
-export type reply = {
+export type ReplyType = {
   id: number
   content: string
   createdAt: string
   score: number
   replyingTo: string
-  user: {
-    image: {
-      png: string
-      webp: string
-    }
-    username: string
-  }
+  user: User
 }
 
-export type appState = {
-  currentUser: user
-  comments: comment[]
+export type Comments = {
+  id: number
+  content: string
+  createdAt: string
+  score: number
+  user: User
+  replies: ReplyType[]
+}
+
+export type StateType = {
+  currentUser: User
+  comments: Comments[]
 }

@@ -1,21 +1,20 @@
 import React from 'react'
-import { user } from '../../types/types'
 import amyrobson from '../../assets/avatars/image-amyrobson.webp'
 import juliusomo from '../../assets/avatars/image-juliusomo.webp'
 import maxblagun from '../../assets/avatars/image-maxblagun.webp'
 import ramsesmiron from '../../assets/avatars/image-ramsesmiron.webp'
 import { useGlobalContext } from '../../context/context'
+import ReactTimeAgo from 'react-time-ago'
 
 const User = ({
   username,
   createdAt,
 }: {
   createdAt: string
-  image: { png: string; webp: string }
   username: string
 }) => {
   const { ...state } = useGlobalContext()
-  const { currentUser } = { ...state }
+  const { currentUser } = { ...state.state }
 
   const avatars: { [key: string]: string } = {
     amyrobson,

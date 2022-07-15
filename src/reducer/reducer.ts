@@ -1,18 +1,36 @@
-import React from 'react'
-import { appState } from '../types/types'
+import { Comments, StateType } from '../Types/types'
+import data from '../data/data.json'
 
-export type ActionTypes = {
-  type: 'ADD COMMENT' | 'DELETE COMMENT' | 'ADD REPLY' | 'DELETE REPLY'
+export const initialState: StateType = data
+
+type UpdateAction = {
+  type: 'ADD_COMMENT' | 'EDIT_COMMENT'
+  payload: string
 }
 
-export const reducer = (state: appState, action: ActionTypes) => {
-  if (action.type === 'ADD COMMENT') {
+type DeleteAction = {
+  type: 'DELETE_COMMENT'
+}
+
+export type ActionType = UpdateAction | DeleteAction
+
+export const reducer = (state: StateType, action: ActionType) => {
+  if (action.type === 'ADD_COMMENT') {
+    const newComment: Comments = {
+      id: Date.now(),
+      content: action.payload,
+      createdAt: 'now',
+      score: 0,
+      user: state.currentUser,
+      replies: [],
+    }
+
+    const updatedState = { ...state, comments: [...state.comments, newComment] }
+
+    return updatedState
+  } else if (action.type === 'DELETE_COMMENT') {
     return state
-  } else if (action.type === 'DELETE COMMENT') {
-    return state
-  } else if (action.type === 'ADD REPLY') {
-    return state
-  } else if (action.type === 'DELETE REPLY') {
+  } else if (action.type === 'EDIT_COMMENT') {
     return state
   } else {
     throw new Error()
