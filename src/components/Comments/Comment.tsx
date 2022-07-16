@@ -1,5 +1,6 @@
 import React from 'react'
 import { Comments } from '../../types/Types'
+import Modal from '../Modal'
 import Reply from '../Replies/Reply'
 import Content from './Content'
 import Options from './Options'
@@ -16,7 +17,7 @@ const Comment = ({
 }: Comments) => {
   return (
     <>
-      <div className='bg-white p-4 rounded-lg mb-4 text-blue-900 relative'>
+      <div className='bg-white p-4 rounded-lg mb-4 text-blue-900 relative min-h-[10rem]'>
         <User {...user} createdAt={createdAt} />
         <Content replyingTo='' content={content} />
         <div className='flex items-center justify-between sm:absolute sm:left-4 sm:right-4 sm:top-4 sm:items-start'>
