@@ -3,7 +3,7 @@ import replyIcon from '../../assets/icon-reply.svg'
 import deleteIcon from '../../assets/icon-delete.svg'
 import editIcon from '../../assets/icon-edit.svg'
 import { useGlobalContext } from '../../context/context'
-import { User } from '../../Types/types'
+import { User } from '../../types/Types'
 
 const Options = ({ username }: { username: string }) => {
   const { ...state } = useGlobalContext()

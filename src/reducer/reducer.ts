@@ -1,4 +1,4 @@
-import { Comments, StateType } from '../Types/types'
+import { Comments, StateType } from '../types/Types'
 import data from '../data/data.json'
 
 export const initialState: StateType = data

@@ -1,5 +1,5 @@
 import React from 'react'
-import { ReplyType } from '../../Types/types'
+import { ReplyType } from '../../types/Types'
 import Content from '../Comments/Content'
 import Options from '../Comments/Options'
 import User from '../Comments/User'

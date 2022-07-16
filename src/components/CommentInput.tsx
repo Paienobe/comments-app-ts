@@ -1,4 +1,4 @@
-import React, { FormEvent, useRef, useState } from 'react'
+import React, { useState } from 'react'
 import userAvatar from '../assets/avatars/image-juliusomo.webp'
 import { useGlobalContext } from '../context/context'
 
