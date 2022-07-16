@@ -6,6 +6,7 @@ import Content from './Content'
 import Options from './Options'
 import User from './User'
 import Votes from './Votes'
+import moment from 'moment'
 
 type CommentProps = {
   id: number
@@ -26,8 +27,6 @@ const Comment = ({
   user,
   setIDofComment,
 }: CommentProps) => {
-  console.log(id)
-
   return (
     <>
       <div className='bg-white p-4 rounded-lg mb-4 text-slate-700 relative min-h-[10rem]'>

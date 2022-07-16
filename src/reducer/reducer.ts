@@ -1,5 +1,6 @@
 import { Comments, StateType } from '../types/Types'
 import data from '../data/data.json'
+import moment from 'moment'
 
 export const initialState: StateType = data
 
@@ -14,7 +15,7 @@ type EditAction = {
 }
 
 type DeleteAction = {
-  type: 'DELETE_COMMENT'
+  type: 'DELETE_COMMENT' | 'DELETE_REPLY'
   payload: number
 }
 
@@ -25,7 +26,7 @@ export const reducer = (state: StateType, action: ActionType) => {
     const newComment: Comments = {
       id: Date.now(),
       content: action.payload,
-      createdAt: 'now',
+      createdAt: moment().fromNow(),
       score: 0,
       user: state.currentUser,
       replies: [],
@@ -51,6 +52,35 @@ export const reducer = (state: StateType, action: ActionType) => {
     return state
   } else if (action.type === 'EDIT_COMMENT') {
     return state
+  } else if (action.type === 'DELETE_REPLY') {
+    const commentWithReplyToBeDeleted = state.comments.find((comment) => {
+      return comment.replies.some((reply) => {
+        return reply.id === action.payload
+      })
+    })
+
+    const updateRepliesInComment = commentWithReplyToBeDeleted?.replies.filter(
+      (comment) => {
+        return comment.id !== action.payload
+      }
+    )
+
+    const updatedComment = {
+      ...commentWithReplyToBeDeleted!,
+      replies: updateRepliesInComment!,
+    }
+
+    const newComments = state.comments.map((comment) => {
+      if (comment.id === commentWithReplyToBeDeleted?.id) {
+        return updatedComment
+      } else {
+        return comment
+      }
+    })
+
+    const updatedState = { ...state, comments: newComments }
+
+    return updatedState
   } else {
     throw new Error()
   }

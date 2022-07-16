@@ -6,9 +6,16 @@ const Modal = ({ IDofComment }: { IDofComment: number }) => {
   const toggleModal = useGlobalContext()?.toggleModal!
   const setToggleModal = globalContext?.setToggleModal!
   const dispatch = useGlobalContext()?.dispatch!
+  const comments = useGlobalContext()?.state.comments!
 
-  const deleteComment = () => {
-    dispatch({ type: 'DELETE_COMMENT', payload: IDofComment })
+  const isAComment = comments.some((comment) => {
+    return comment.id === IDofComment
+  })
+
+  const deleteCommentOrReply = () => {
+    isAComment
+      ? dispatch({ type: 'DELETE_COMMENT', payload: IDofComment })
+      : dispatch({ type: 'DELETE_REPLY', payload: IDofComment })
   }
 
   return (
@@ -35,7 +42,7 @@ const Modal = ({ IDofComment }: { IDofComment: number }) => {
           <button
             className='py-3 bg-red-600 text-white rounded-md w-[49%] font-semibold'
             onClick={() => {
-              deleteComment()
+              deleteCommentOrReply()
               setToggleModal(false)
             }}
           >
