@@ -5,7 +5,7 @@ import Modal from './components/Modal'
 
 function App() {
   return (
-    <main className='App font-Rubik bg-indigo-100 min-h-screen flex flex-col items-center justify-center p-4 py-10 transition sm:px-10 sm:overflow-x-hidden lg:px-[25%]'>
+    <main className='App font-Rubik bg-slate-200 min-h-screen flex flex-col items-center justify-center p-4 py-10 transition sm:px-10 sm:overflow-x-hidden lg:px-[25%]'>
       <CommentsContainer />
       <CommentInput />
     </main>
