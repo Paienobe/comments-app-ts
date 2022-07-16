@@ -1,14 +1,19 @@
 import React, { useEffect } from 'react'
 import { useGlobalContext } from '../context/context'
 
-const Modal = () => {
+const Modal = ({ IDofComment }: { IDofComment: number }) => {
   const globalContext = useGlobalContext()
   const toggleModal = useGlobalContext()?.toggleModal!
   const setToggleModal = globalContext?.setToggleModal!
+  const dispatch = useGlobalContext()?.dispatch!
+
+  const deleteComment = () => {
+    dispatch({ type: 'DELETE_COMMENT', payload: IDofComment })
+  }
 
   return (
-    <div className='fixed bg-slate-900 bg-opacity-50 top-0 bottom-0 left-0 right-0 flex items-center justify-center'>
-      <div className='bg-white rounded-lg p-4 w-[90%]'>
+    <div className='fixed bg-slate-900 bg-opacity-50 top-0 bottom-0 left-0 right-0 flex items-center justify-center z-10'>
+      <div className='bg-white rounded-lg p-4 w-[90%] sm:w-[50%] lg:w-[30%]'>
         <h3 className='font-bold text-slate-700 mb-4 text-lg'>
           Delete comment
         </h3>
@@ -27,7 +32,13 @@ const Modal = () => {
           >
             NO, CANCEL
           </button>
-          <button className='py-3 bg-red-600 text-white rounded-md w-[49%] font-semibold'>
+          <button
+            className='py-3 bg-red-600 text-white rounded-md w-[49%] font-semibold'
+            onClick={() => {
+              deleteComment()
+              setToggleModal(false)
+            }}
+          >
             YES, DELETE
           </button>
         </div>

@@ -5,7 +5,15 @@ import editIcon from '../../assets/icon-edit.svg'
 import { useGlobalContext } from '../../context/context'
 import { User } from '../../types/Types'
 
-const Options = ({ username }: { username: string }) => {
+const Options = ({
+  id,
+  username,
+  setIDofComment,
+}: {
+  id: number
+  username: string
+  setIDofComment: React.Dispatch<React.SetStateAction<number>>
+}) => {
   const globalContext = useGlobalContext()
   const currentUser = useGlobalContext()?.state.currentUser!
   const setToggleModal = useGlobalContext()?.setToggleModal!
@@ -13,7 +21,7 @@ const Options = ({ username }: { username: string }) => {
   return (
     <div className='font-bold'>
       {currentUser.username !== username ? (
-        <div className='hover:scale-105 cursor-pointer transition flex items-center'>
+        <div className='hover:scale-105 cursor-pointer transition flex items-center text-blue-800'>
           <img src={replyIcon} alt='reply' /> <p className='ml-3'>Reply</p>
         </div>
       ) : (
@@ -22,6 +30,7 @@ const Options = ({ username }: { username: string }) => {
             className='flex items-center hover:scale-105 cursor-pointer transition'
             onClick={() => {
               setToggleModal(true)
+              setIDofComment(id)
             }}
           >
             <img src={deleteIcon} alt='reply' />{' '}
@@ -29,7 +38,7 @@ const Options = ({ username }: { username: string }) => {
           </div>
           <div className='flex items-center hover:scale-105 cursor-pointer transition'>
             <img src={editIcon} alt='reply' />{' '}
-            <p className='mx-3 mr-0 text-blue-900'>Edit</p>
+            <p className='mx-3 mr-0 text-blue-800'>Edit</p>
           </div>
         </div>
       )}

@@ -3,16 +3,22 @@ import data from '../data/data.json'
 
 export const initialState: StateType = data
 
-type UpdateAction = {
-  type: 'ADD_COMMENT' | 'EDIT_COMMENT'
+type NewCommentAction = {
+  type: 'ADD_COMMENT'
   payload: string
+}
+
+type EditAction = {
+  type: 'EDIT_COMMENT'
+  payload: string | number
 }
 
 type DeleteAction = {
   type: 'DELETE_COMMENT'
+  payload: number
 }
 
-export type ActionType = UpdateAction | DeleteAction
+export type ActionType = NewCommentAction | EditAction | DeleteAction
 
 export const reducer = (state: StateType, action: ActionType) => {
   if (action.type === 'ADD_COMMENT') {
@@ -29,6 +35,19 @@ export const reducer = (state: StateType, action: ActionType) => {
 
     return updatedState
   } else if (action.type === 'DELETE_COMMENT') {
+    const checkIfCommentExists = state.comments.find((comment) => {
+      return comment.id === action.payload
+    })
+
+    if (checkIfCommentExists) {
+      const updatedComments = state.comments.filter((comment) => {
+        return comment.id !== action.payload
+      })
+
+      const updatedState = { ...state, comments: updatedComments }
+
+      return updatedState
+    }
     return state
   } else if (action.type === 'EDIT_COMMENT') {
     return state
