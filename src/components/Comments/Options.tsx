@@ -6,8 +6,9 @@ import { useGlobalContext } from '../../context/context'
 import { User } from '../../types/Types'
 
 const Options = ({ username }: { username: string }) => {
-  const { ...state } = useGlobalContext()
-  const { currentUser } = { ...state.state }
+  const globalContext = useGlobalContext()
+  const currentUser = useGlobalContext()?.state.currentUser!
+  const setToggleModal = useGlobalContext()?.setToggleModal!
 
   return (
     <div className='font-bold'>
@@ -17,7 +18,12 @@ const Options = ({ username }: { username: string }) => {
         </div>
       ) : (
         <div className='flex items-center'>
-          <div className='flex items-center hover:scale-105 cursor-pointer transition'>
+          <div
+            className='flex items-center hover:scale-105 cursor-pointer transition'
+            onClick={() => {
+              setToggleModal(true)
+            }}
+          >
             <img src={deleteIcon} alt='reply' />{' '}
             <p className='mx-3 text-red-400'>Delete</p>
           </div>

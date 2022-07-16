@@ -1,6 +1,7 @@
 import React from 'react'
 import CommentInput from './components/CommentInput'
 import CommentsContainer from './components/CommentsContainer'
+import Modal from './components/Modal'
 
 function App() {
   return (
