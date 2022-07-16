@@ -1,21 +1,22 @@
-import React, { useContext, useReducer } from 'react'
-import data from '../data/data.json'
-import { reducer } from '../reducer/reducer'
-import { appState } from '../types/types'
-import { ActionTypes } from '../reducer/reducer'
+import React, { createContext, ReactNode, useContext, useReducer } from 'react'
+import { ActionType, initialState, reducer } from '../reducer/reducer'
+import { StateType } from '../types/Types'
 
-interface contextType extends appState {
-  dispatch: React.Dispatch<ActionTypes>
+type AppContextType = {
+  state: StateType
+  dispatch: React.Dispatch<ActionType>
 }
 
-const initialState: appState = data
+type AppProviderType = {
+  children: ReactNode
+}
 
-const AppContext = React.createContext<contextType | null>(null)
+export const AppContext = createContext<AppContextType | null>(null)
 
-const AppProvider = ({ children }: { children: React.ReactNode }) => {
+export const AppProvider = ({ children }: AppProviderType) => {
   const [state, dispatch] = useReducer(reducer, initialState)
   return (
-    <AppContext.Provider value={{ ...state, dispatch }}>
+    <AppContext.Provider value={{ state, dispatch }}>
       {children}
     </AppContext.Provider>
   )
@@ -24,5 +25,3 @@ const AppProvider = ({ children }: { children: React.ReactNode }) => {
 export const useGlobalContext = () => {
   return useContext(AppContext)
 }
-
-export { AppContext, AppProvider }

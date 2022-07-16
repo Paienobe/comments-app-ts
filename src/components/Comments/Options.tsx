@@ -2,12 +2,12 @@ import React from 'react'
 import replyIcon from '../../assets/icon-reply.svg'
 import deleteIcon from '../../assets/icon-delete.svg'
 import editIcon from '../../assets/icon-edit.svg'
-import { user } from '../../types/types'
 import { useGlobalContext } from '../../context/context'
+import { User } from '../../types/Types'
 
-const Options = ({ username }: user) => {
+const Options = ({ username }: { username: string }) => {
   const { ...state } = useGlobalContext()
-  const { currentUser } = { ...state }
+  const { currentUser } = { ...state.state }
 
   return (
     <div className='font-bold'>
