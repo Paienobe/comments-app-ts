@@ -25,8 +25,6 @@ const Reply = ({
   user,
   setIDofComment,
 }: ReplyProps) => {
-  console.log(id)
-
   return (
     <div className='bg-white rounded-lg p-4 mb-4 text-blue-900 sm:relative'>
       <User {...user} createdAt={createdAt} />
