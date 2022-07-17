@@ -2,7 +2,16 @@ import { Comments, StateType } from '../types/Types'
 import data from '../data/data.json'
 import moment from 'moment'
 
-export const initialState: StateType = data
+const getDataFromLocalStorage = () => {
+  const checkForData = localStorage.getItem('appState')
+  if (checkForData) {
+    return JSON.parse(checkForData)
+  } else {
+    return data
+  }
+}
+
+export const initialState: StateType = getDataFromLocalStorage()
 
 type NewCommentAction = {
   type: 'ADD_COMMENT'
