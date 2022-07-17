@@ -34,6 +34,10 @@ export const AppProvider = ({ children }: AppProviderType) => {
     }
   }, [toggleModal])
 
+  useEffect(() => {
+    localStorage.setItem('appState', JSON.stringify(state))
+  }, [state])
+
   return (
     <AppContext.Provider
       value={{ state, dispatch, toggleModal, setToggleModal }}
