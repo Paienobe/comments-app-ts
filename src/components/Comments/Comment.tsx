@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
-import { Comments, ReplyType, User as UserType } from '../../types/Types'
-import Modal from '../Modal'
+import { ReplyType, User as UserType } from '../../types/Types'
 import Reply from '../Replies/Reply'
 import Content from './Content'
 import Options from './Options'
@@ -28,6 +27,7 @@ const Comment = ({
   setIDofComment,
 }: CommentProps) => {
   const [makeReply, setMakeReply] = useState(false)
+
   return (
     <>
       <div className='bg-white p-4 rounded-lg mb-4 text-slate-700 relative min-h-[10rem]'>
@@ -40,6 +40,7 @@ const Comment = ({
             id={id}
             setIDofComment={setIDofComment}
             setMakeReply={setMakeReply}
+            isAReply={false}
           />
         </div>
       </div>

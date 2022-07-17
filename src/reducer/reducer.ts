@@ -87,10 +87,14 @@ export const reducer = (state: StateType, action: ActionType) => {
         return comment.id === action.payload.id
       })
 
+      const timetest = () => {}
+
+      timetest()
+
       const newReply: ReplyType = {
         id: Date.now(),
         content: action.payload.content,
-        createdAt: moment(Date.now()).fromNow(),
+        createdAt: moment().fromNow(),
         score: 0,
         replyingTo: commentToBeReplied?.user.username!,
         user: state.currentUser,
