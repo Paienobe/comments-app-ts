@@ -30,7 +30,7 @@ const Reply = ({
       <User {...user} createdAt={createdAt} />
       <Content content={content} replyingTo={replyingTo} />
       <div className='flex items-center justify-between sm:absolute sm:left-4 sm:right-4 sm:top-4 sm:items-start'>
-        <Votes score={score} />
+        <Votes id={id} score={score} isAReply />
         <Options {...user} id={id} setIDofComment={setIDofComment} />
       </div>
     </div>

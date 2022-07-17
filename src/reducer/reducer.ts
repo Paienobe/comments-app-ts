@@ -1,6 +1,7 @@
 import { Comments, StateType } from '../types/Types'
 import data from '../data/data.json'
 import moment from 'moment'
+import { type } from 'os'
 
 const getDataFromLocalStorage = () => {
   const checkForData = localStorage.getItem('appState')
@@ -28,7 +29,20 @@ type DeleteAction = {
   payload: number
 }
 
-export type ActionType = NewCommentAction | EditAction | DeleteAction
+type VoteAction = {
+  type:
+    | 'UPVOTE_COMMENT'
+    | 'UPVOTE_REPLY'
+    | 'DOWNVOTE_COMMENT'
+    | 'DOWNVOTE_REPLY'
+  payload: number
+}
+
+export type ActionType =
+  | NewCommentAction
+  | EditAction
+  | DeleteAction
+  | VoteAction
 
 export const reducer = (state: StateType, action: ActionType) => {
   if (action.type === 'ADD_COMMENT') {
@@ -90,6 +104,96 @@ export const reducer = (state: StateType, action: ActionType) => {
     const updatedState = { ...state, comments: newComments }
 
     return updatedState
+  } else if (action.type === 'UPVOTE_COMMENT') {
+    const commentToBeVoted = state.comments.find((comment) => {
+      return comment.id === action.payload
+    })
+
+    const updatedCommentScore = {
+      ...commentToBeVoted!,
+      score: commentToBeVoted?.score! + 1,
+    }
+
+    const updatedComments = state.comments.map((comment) => {
+      if (comment.id === action.payload) {
+        return updatedCommentScore
+      } else {
+        return comment
+      }
+    })
+
+    return { ...state, comments: updatedComments }
+  } else if (action.type === 'DOWNVOTE_COMMENT') {
+    const commentToBeDownvoted = state.comments.find((comment) => {
+      return comment.id === action.payload
+    })
+
+    const updatedCommentScore = {
+      ...commentToBeDownvoted!,
+      score: commentToBeDownvoted?.score! - 1,
+    }
+
+    const updatedComments = state.comments.map((comment) => {
+      if (comment.id === action.payload) {
+        return updatedCommentScore
+      } else {
+        return comment
+      }
+    })
+
+    return { ...state, comments: updatedComments }
+  } else if (action.type === 'UPVOTE_REPLY') {
+    const commentWithReplyToBeUpvoted = state.comments.find((comment) => {
+      return comment.replies.some((reply) => {
+        return reply.id === action.payload
+      })
+    })
+
+    const updatedReplyScore = commentWithReplyToBeUpvoted!.replies.map(
+      (reply) => {
+        if (reply.id === action.payload) {
+          return { ...reply!, score: reply.score + 1 }
+        } else {
+          return reply
+        }
+      }
+    )
+
+    const updatedReplies = state.comments.map((comment) => {
+      if (comment.id === commentWithReplyToBeUpvoted!.id) {
+        return { ...commentWithReplyToBeUpvoted!, replies: updatedReplyScore }
+      } else {
+        return comment
+      }
+    })
+
+    return { ...state, comments: updatedReplies }
+  } else if (action.type === 'DOWNVOTE_REPLY') {
+    const commentWithReplyToBeDownvoted = state.comments.find((comment) => {
+      return comment.replies.some((reply) => {
+        return reply.id === action.payload
+      })
+    })
+
+    const updatedReplyScore = commentWithReplyToBeDownvoted!.replies.map(
+      (reply) => {
+        if (reply.id === action.payload) {
+          return { ...reply!, score: reply.score - 1 }
+        } else {
+          return reply
+        }
+      }
+    )
+
+    const updatedReplies = state.comments.map((comment) => {
+      if (comment.id === commentWithReplyToBeDownvoted!.id) {
+        return { ...commentWithReplyToBeDownvoted!, replies: updatedReplyScore }
+      } else {
+        return comment
+      }
+    })
+
+    return { ...state, comments: updatedReplies }
   } else {
     throw new Error()
   }
