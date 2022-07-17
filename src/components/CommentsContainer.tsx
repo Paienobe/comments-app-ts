@@ -13,11 +13,9 @@ const CommentsContainer = () => {
     <div className='w-full'>
       {comments?.map((comment) => {
         return (
-          <Comment
-            key={comment.id}
-            {...comment}
-            setIDofComment={setIDofComment}
-          />
+          <div key={comment.id}>
+            <Comment {...comment} setIDofComment={setIDofComment} />
+          </div>
         )
       })}
 

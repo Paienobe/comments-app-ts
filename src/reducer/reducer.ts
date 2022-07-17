@@ -1,4 +1,4 @@
-import { Comments, StateType } from '../types/Types'
+import { Comments, ReplyType, StateType } from '../types/Types'
 import data from '../data/data.json'
 import moment from 'moment'
 import { type } from 'os'
@@ -17,6 +17,11 @@ export const initialState: StateType = getDataFromLocalStorage()
 type NewCommentAction = {
   type: 'ADD_COMMENT'
   payload: string
+}
+
+type NewReplyAction = {
+  type: 'ADD_REPLY' | 'EDIT_REPLY'
+  payload: { id: number; content: string }
 }
 
 type EditAction = {
@@ -43,6 +48,7 @@ export type ActionType =
   | EditAction
   | DeleteAction
   | VoteAction
+  | NewReplyAction
 
 export const reducer = (state: StateType, action: ActionType) => {
   if (action.type === 'ADD_COMMENT') {
@@ -75,6 +81,43 @@ export const reducer = (state: StateType, action: ActionType) => {
     return state
   } else if (action.type === 'EDIT_COMMENT') {
     return state
+  } else if (action.type === 'ADD_REPLY') {
+    if (action.payload.content) {
+      const commentToBeReplied = state.comments.find((comment) => {
+        return comment.id === action.payload.id
+      })
+
+      const timetest = () => {}
+
+      timetest()
+
+      const newReply: ReplyType = {
+        id: Date.now(),
+        content: action.payload.content,
+        createdAt: moment().fromNow(),
+        score: 0,
+        replyingTo: commentToBeReplied?.user.username!,
+        user: state.currentUser,
+      }
+
+      const updatedCommentToBeReplied = {
+        ...commentToBeReplied!,
+        replies: [...commentToBeReplied?.replies!, newReply],
+      }
+
+      const updatedComments = state.comments.map((comment) => {
+        if (comment.id === commentToBeReplied?.id) {
+          return updatedCommentToBeReplied
+        } else {
+          return comment
+        }
+      })
+
+      const updatedState = { ...state, comments: updatedComments }
+
+      return updatedState
+    }
+    return state
   } else if (action.type === 'DELETE_REPLY') {
     const commentWithReplyToBeDeleted = state.comments.find((comment) => {
       return comment.replies.some((reply) => {
@@ -104,6 +147,8 @@ export const reducer = (state: StateType, action: ActionType) => {
     const updatedState = { ...state, comments: newComments }
 
     return updatedState
+  } else if (action.type === 'EDIT_REPLY') {
+    return state
   } else if (action.type === 'UPVOTE_COMMENT') {
     const commentToBeVoted = state.comments.find((comment) => {
       return comment.id === action.payload
