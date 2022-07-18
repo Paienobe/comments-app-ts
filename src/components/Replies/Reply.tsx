@@ -16,6 +16,7 @@ type ReplyProps = {
   user: UserType
   setIDofComment: React.Dispatch<React.SetStateAction<number>>
   setMakeReply: React.Dispatch<React.SetStateAction<boolean>>
+  setIsEditing: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 const Reply = ({
@@ -27,6 +28,7 @@ const Reply = ({
   user,
   setIDofComment,
   setMakeReply,
+  setIsEditing,
 }: ReplyProps) => {
   const [replyAReply, setReplyAReply] = useState(false)
   return (
@@ -43,6 +45,7 @@ const Reply = ({
             setMakeReply={setMakeReply}
             isAReply
             setReplyAReply={setReplyAReply}
+            setIsEditing={setIsEditing}
           />
         </div>
       </div>

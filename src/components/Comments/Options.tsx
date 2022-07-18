@@ -12,6 +12,7 @@ const Options = ({
   setMakeReply,
   isAReply,
   setReplyAReply,
+  setIsEditing,
 }: {
   id: number
   username: string
@@ -19,6 +20,7 @@ const Options = ({
   setMakeReply: React.Dispatch<React.SetStateAction<boolean>>
   isAReply: boolean
   setReplyAReply: React.Dispatch<React.SetStateAction<boolean>>
+  setIsEditing: React.Dispatch<React.SetStateAction<boolean>>
 }) => {
   const globalContext = useGlobalContext()
   const currentUser = useGlobalContext()?.state.currentUser!
@@ -48,7 +50,12 @@ const Options = ({
             <img src={deleteIcon} alt='reply' />{' '}
             <p className='mx-3 text-red-400'>Delete</p>
           </div>
-          <div className='flex items-center hover:scale-105 cursor-pointer transition'>
+          <div
+            className='flex items-center hover:scale-105 cursor-pointer transition'
+            onClick={() => {
+              setIsEditing(true)
+            }}
+          >
             <img src={editIcon} alt='reply' />{' '}
             <p className='mx-3 mr-0 text-blue-800'>Edit</p>
           </div>

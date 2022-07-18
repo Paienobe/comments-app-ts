@@ -6,6 +6,7 @@ import Options from './Options'
 import User from './User'
 import Votes from './Votes'
 import ReplyOrEditInput from '../ReplyOrEditInput'
+import EditInput from './EditInput'
 
 type CommentProps = {
   id: number
@@ -28,12 +29,17 @@ const Comment = ({
 }: CommentProps) => {
   const [makeReply, setMakeReply] = useState(false)
   const [replyAReply, setReplyAReply] = useState(false)
+  const [isEditing, setIsEditing] = useState(false)
 
   return (
     <>
       <div className='bg-white p-4 rounded-lg mb-4 text-slate-700 relative min-h-[10rem]'>
         <User {...user} createdAt={createdAt} />
-        <Content replyingTo='' content={content} />
+        {!isEditing ? (
+          <Content replyingTo='' content={content} />
+        ) : (
+          <EditInput content={content} id={id} setIsEditing={setIsEditing} />
+        )}
         <div className='flex items-center justify-between sm:absolute sm:left-4 sm:right-4 sm:top-4 sm:items-start'>
           <Votes score={score} id={id} isAReply={false} />
           <Options
@@ -43,6 +49,7 @@ const Comment = ({
             setMakeReply={setMakeReply}
             isAReply={false}
             setReplyAReply={setReplyAReply}
+            setIsEditing={setIsEditing}
           />
         </div>
       </div>
@@ -64,6 +71,7 @@ const Comment = ({
               {...reply}
               setIDofComment={setIDofComment}
               setMakeReply={setMakeReply}
+              setIsEditing={setIsEditing}
             />
           )
         })}

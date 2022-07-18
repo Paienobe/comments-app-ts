@@ -19,14 +19,9 @@ type NewCommentAction = {
   payload: string
 }
 
-type NewReplyAction = {
-  type: 'ADD_REPLY' | 'EDIT_REPLY' | 'REPLY_A_REPLY'
+type NewReplyAndEditAction = {
+  type: 'ADD_REPLY' | 'EDIT_REPLY' | 'REPLY_A_REPLY' | 'EDIT_COMMENT'
   payload: { id: number; content: string }
-}
-
-type EditAction = {
-  type: 'EDIT_COMMENT'
-  payload: string | number
 }
 
 type DeleteAction = {
@@ -45,10 +40,9 @@ type VoteAction = {
 
 export type ActionType =
   | NewCommentAction
-  | EditAction
   | DeleteAction
   | VoteAction
-  | NewReplyAction
+  | NewReplyAndEditAction
 
 export const reducer = (state: StateType, action: ActionType) => {
   if (action.type === 'ADD_COMMENT') {
@@ -80,6 +74,26 @@ export const reducer = (state: StateType, action: ActionType) => {
     }
     return state
   } else if (action.type === 'EDIT_COMMENT') {
+    if (action.payload.content) {
+      const commentToBeEdited = state.comments.find((comment) => {
+        return comment.id === action.payload.id
+      })
+
+      const updateCommentContent = {
+        ...commentToBeEdited!,
+        content: action.payload.content,
+      }
+
+      const updatedComments = state.comments.map((comment) => {
+        if (comment.id === commentToBeEdited!.id) {
+          return updateCommentContent
+        } else return comment
+      })
+
+      const updatedState = { ...state, comments: updatedComments }
+
+      return updatedState
+    }
     return state
   } else if (action.type === 'ADD_REPLY') {
     if (action.payload.content) {
