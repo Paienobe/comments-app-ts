@@ -27,6 +27,7 @@ const Comment = ({
   setIDofComment,
 }: CommentProps) => {
   const [makeReply, setMakeReply] = useState(false)
+  const [replyAReply, setReplyAReply] = useState(false)
 
   return (
     <>
@@ -41,9 +42,19 @@ const Comment = ({
             setIDofComment={setIDofComment}
             setMakeReply={setMakeReply}
             isAReply={false}
+            setReplyAReply={setReplyAReply}
           />
         </div>
       </div>
+
+      {makeReply && (
+        <ReplyOrEditInput
+          id={id}
+          setMakeReply={setMakeReply}
+          isAReply={false}
+          setReplyAReply={setReplyAReply}
+        />
+      )}
 
       <div className='mb-4 border-0 border-transparent border-l-2 border-slate-500 border-opacity-20 pl-4 sm:w-[95%] sm:ml-auto sm:pl-8'>
         {replies.map((reply) => {
@@ -57,8 +68,6 @@ const Comment = ({
           )
         })}
       </div>
-
-      {makeReply && <ReplyOrEditInput id={id} setMakeReply={setMakeReply} />}
     </>
   )
 }

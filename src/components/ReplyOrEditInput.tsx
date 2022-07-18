@@ -5,9 +5,13 @@ import userAvatar from '../assets/avatars/image-juliusomo.webp'
 const ReplyOrEditInput = ({
   id,
   setMakeReply,
+  isAReply,
+  setReplyAReply,
 }: {
   id: number
   setMakeReply: React.Dispatch<React.SetStateAction<boolean>>
+  isAReply: boolean
+  setReplyAReply: React.Dispatch<React.SetStateAction<boolean>>
 }) => {
   const globalContext = useGlobalContext()
   const dispatch = globalContext?.dispatch!
@@ -17,8 +21,19 @@ const ReplyOrEditInput = ({
       className='mb-4'
       onSubmit={(e) => {
         e.preventDefault()
-        dispatch({ type: 'ADD_REPLY', payload: { id, content: replyContent } })
+        !isAReply &&
+          dispatch({
+            type: 'ADD_REPLY',
+            payload: { id, content: replyContent },
+          })
+        isAReply &&
+          dispatch({
+            type: 'REPLY_A_REPLY',
+            payload: { id, content: replyContent },
+          })
+        setReplyContent('')
         setMakeReply(false)
+        isAReply && setReplyAReply(false)
       }}
     >
       <textarea

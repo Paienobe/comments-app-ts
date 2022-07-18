@@ -28,7 +28,7 @@ const Reply = ({
   setIDofComment,
   setMakeReply,
 }: ReplyProps) => {
-  const [replyThisReply, setReplyThisReply] = useState(false)
+  const [replyAReply, setReplyAReply] = useState(false)
   return (
     <>
       <div className='bg-white rounded-lg p-4 mb-4 text-blue-900 min-h-[10rem] sm:relative'>
@@ -42,11 +42,17 @@ const Reply = ({
             setIDofComment={setIDofComment}
             setMakeReply={setMakeReply}
             isAReply
+            setReplyAReply={setReplyAReply}
           />
         </div>
       </div>
-      {replyThisReply && (
-        <ReplyOrEditInput id={id} setMakeReply={setMakeReply} />
+      {replyAReply && (
+        <ReplyOrEditInput
+          id={id}
+          setMakeReply={setMakeReply}
+          isAReply
+          setReplyAReply={setReplyAReply}
+        />
       )}
     </>
   )

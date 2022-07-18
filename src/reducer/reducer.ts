@@ -20,7 +20,7 @@ type NewCommentAction = {
 }
 
 type NewReplyAction = {
-  type: 'ADD_REPLY' | 'EDIT_REPLY'
+  type: 'ADD_REPLY' | 'EDIT_REPLY' | 'REPLY_A_REPLY'
   payload: { id: number; content: string }
 }
 
@@ -148,6 +148,48 @@ export const reducer = (state: StateType, action: ActionType) => {
 
     return updatedState
   } else if (action.type === 'EDIT_REPLY') {
+    return state
+  } else if (action.type === 'REPLY_A_REPLY') {
+    if (action.payload.content) {
+      const commentWithReplyToBeReplied = state.comments.find((comment) => {
+        return comment.replies.some((reply) => {
+          return reply.id === action.payload.id
+        })
+      })
+
+      const replyToBeReplied = commentWithReplyToBeReplied?.replies.find(
+        (reply) => {
+          return reply.id === action.payload.id
+        }
+      )
+
+      const newReply: ReplyType = {
+        id: Date.now(),
+        content: action.payload.content,
+        createdAt: moment().fromNow(),
+        score: 0,
+        replyingTo: replyToBeReplied?.user.username!,
+        user: state.currentUser,
+      }
+
+      const updateRepliesOfParentComment = {
+        ...commentWithReplyToBeReplied!,
+        replies: [...commentWithReplyToBeReplied?.replies!, newReply],
+      }
+
+      const updatedComments = state.comments.map((comment) => {
+        if (comment.id === commentWithReplyToBeReplied!.id) {
+          return updateRepliesOfParentComment
+        } else {
+          return comment
+        }
+      })
+
+      const updatedState = { ...state!, comments: updatedComments }
+
+      return updatedState
+    }
+
     return state
   } else if (action.type === 'UPVOTE_COMMENT') {
     const commentToBeVoted = state.comments.find((comment) => {
