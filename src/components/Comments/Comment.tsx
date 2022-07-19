@@ -30,6 +30,7 @@ const Comment = ({
   const [makeReply, setMakeReply] = useState(false)
   const [replyAReply, setReplyAReply] = useState(false)
   const [isEditing, setIsEditing] = useState(false)
+  const [editAReply, setEditAReply] = useState(0)
 
   return (
     <>
@@ -50,6 +51,7 @@ const Comment = ({
             isAReply={false}
             setReplyAReply={setReplyAReply}
             setIsEditing={setIsEditing}
+            setEditAReply={setEditAReply}
           />
         </div>
       </div>
@@ -72,6 +74,8 @@ const Comment = ({
               setIDofComment={setIDofComment}
               setMakeReply={setMakeReply}
               setIsEditing={setIsEditing}
+              setEditAReply={setEditAReply}
+              editAReply={editAReply}
             />
           )
         })}
