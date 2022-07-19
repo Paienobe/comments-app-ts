@@ -11,12 +11,14 @@ const Options = ({
   setIDofComment,
   setMakeReply,
   isAReply,
+  setReplyAReply,
 }: {
   id: number
   username: string
   setIDofComment: React.Dispatch<React.SetStateAction<number>>
   setMakeReply: React.Dispatch<React.SetStateAction<boolean>>
   isAReply: boolean
+  setReplyAReply: React.Dispatch<React.SetStateAction<boolean>>
 }) => {
   const globalContext = useGlobalContext()
   const currentUser = useGlobalContext()?.state.currentUser!
@@ -29,6 +31,7 @@ const Options = ({
           className='hover:scale-105 cursor-pointer transition flex items-center text-blue-800'
           onClick={() => {
             !isAReply && setMakeReply(true)
+            isAReply && setReplyAReply(true)
           }}
         >
           <img src={replyIcon} alt='reply' /> <p className='ml-3'>Reply</p>
