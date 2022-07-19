@@ -49,7 +49,7 @@ export const reducer = (state: StateType, action: ActionType) => {
     const newComment: Comments = {
       id: Date.now(),
       content: action.payload,
-      createdAt: moment().fromNow(),
+      createdAt: 'now',
       score: 0,
       user: state.currentUser,
       replies: [],
@@ -108,7 +108,7 @@ export const reducer = (state: StateType, action: ActionType) => {
       const newReply: ReplyType = {
         id: Date.now(),
         content: action.payload.content,
-        createdAt: moment().fromNow(),
+        createdAt: 'now',
         score: 0,
         replyingTo: commentToBeReplied?.user.username!,
         user: state.currentUser,
@@ -224,7 +224,7 @@ export const reducer = (state: StateType, action: ActionType) => {
       const newReply: ReplyType = {
         id: Date.now(),
         content: action.payload.content,
-        createdAt: moment().fromNow(),
+        createdAt: 'now',
         score: 0,
         replyingTo: replyToBeReplied?.user.username!,
         user: state.currentUser,
