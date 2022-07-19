@@ -21,7 +21,7 @@ const EditInput = ({
   }
   return (
     <form
-      className='mt-3 mb-2'
+      className='mt-3 mb-2 sm:w-[90%] sm:ml-auto'
       onSubmit={(e) => {
         e.preventDefault()
         editComment()

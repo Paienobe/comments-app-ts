@@ -53,7 +53,7 @@ const Options = ({
           <div
             className='flex items-center hover:scale-105 cursor-pointer transition'
             onClick={() => {
-              setIsEditing(true)
+              !isAReply && setIsEditing(true)
             }}
           >
             <img src={editIcon} alt='reply' />{' '}
