@@ -13,6 +13,7 @@ const Options = ({
   isAReply,
   setReplyAReply,
   setIsEditing,
+  setEditAReply,
 }: {
   id: number
   username: string
@@ -21,6 +22,7 @@ const Options = ({
   isAReply: boolean
   setReplyAReply: React.Dispatch<React.SetStateAction<boolean>>
   setIsEditing: React.Dispatch<React.SetStateAction<boolean>>
+  setEditAReply: React.Dispatch<React.SetStateAction<number>>
 }) => {
   const globalContext = useGlobalContext()
   const currentUser = useGlobalContext()?.state.currentUser!
@@ -54,6 +56,7 @@ const Options = ({
             className='flex items-center hover:scale-105 cursor-pointer transition'
             onClick={() => {
               !isAReply && setIsEditing(true)
+              isAReply && setEditAReply(id)
             }}
           >
             <img src={editIcon} alt='reply' />{' '}

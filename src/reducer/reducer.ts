@@ -162,6 +162,50 @@ export const reducer = (state: StateType, action: ActionType) => {
 
     return updatedState
   } else if (action.type === 'EDIT_REPLY') {
+    if (action.payload.content) {
+      const commentWithReplyToBeEdited = state.comments.find((comment) => {
+        return comment.replies.some((reply) => {
+          return reply.id === action.payload.id
+        })
+      })
+
+      const replyToBeEdited = commentWithReplyToBeEdited?.replies.find(
+        (reply) => {
+          return reply.id === action.payload.id
+        }
+      )
+
+      const updatedReply: ReplyType = {
+        ...replyToBeEdited!,
+        content: action.payload.content,
+      }
+
+      const updatedParentCommentReplies =
+        commentWithReplyToBeEdited?.replies.map((reply) => {
+          if (reply.id === action.payload.id) {
+            return updatedReply
+          } else {
+            return reply
+          }
+        })
+
+      const updatedParentComment: Comments = {
+        ...commentWithReplyToBeEdited!,
+        replies: updatedParentCommentReplies!,
+      }
+
+      const updatedComments = state.comments.map((comment) => {
+        if (comment.id === commentWithReplyToBeEdited!.id) {
+          return updatedParentComment
+        } else {
+          return comment
+        }
+      })
+
+      const updatedState = { ...state, comments: updatedComments }
+
+      return updatedState
+    }
     return state
   } else if (action.type === 'REPLY_A_REPLY') {
     if (action.payload.content) {
